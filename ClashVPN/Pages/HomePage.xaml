@@ -1,0 +1,177 @@
+<Page
+    x:Class="ClashVPN.Pages.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background"     Value="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"/>
+            <Setter Property="CornerRadius"   Value="8"/>
+            <Setter Property="Padding"        Value="16"/>
+            <Setter Property="Margin"         Value="0,0,0,12"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>  <!-- Header -->
+            <RowDefinition Height="*"/>     <!-- Content -->
+            <RowDefinition Height="Auto"/>  <!-- Bottom nav -->
+        </Grid.RowDefinitions>
+
+        <!-- ── Header ── -->
+        <Border Grid.Row="0" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Padding="16,12">
+            <Grid>
+                <TextBlock Text="Clash VPN" FontSize="20" FontWeight="SemiBold"
+                           Foreground="White" VerticalAlignment="Center"/>
+                <Button HorizontalAlignment="Right" Click="OnSettingsClick"
+                        Background="Transparent" Foreground="White" Padding="8">
+                    <TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets" FontSize="20"/>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- ── Main Content ── -->
+        <ScrollViewer Grid.Row="1" Padding="16">
+            <StackPanel>
+
+                <!-- 连接状态卡片 -->
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel HorizontalAlignment="Center" Spacing="16">
+
+                        <!-- 状态圆环 -->
+                        <Ellipse Width="100" Height="100"
+                                 x:Name="StatusEllipse"
+                                 Fill="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                                 Stroke="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                 StrokeThickness="3"/>
+
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock x:Name="StatusLabel" Text="未连接"
+                                       FontSize="18" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="NodeLabel"
+                                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                       FontSize="13" HorizontalAlignment="Center"
+                                       Text="未选择节点"/>
+                        </StackPanel>
+
+                        <!-- 连接/断开按钮 -->
+                        <Button x:Name="ConnectButton"
+                                Content="连接"
+                                Style="{StaticResource AccentButtonStyle}"
+                                Width="180" Height="44"
+                                HorizontalAlignment="Center"
+                                Click="OnConnectClick"/>
+
+                    </StackPanel>
+                </Border>
+
+                <!-- 流量统计卡片 -->
+                <Border Style="{StaticResource CardStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                            <TextBlock Text="↑ 上传" FontSize="12"
+                                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                            <TextBlock x:Name="UploadLabel" Text="0 B" FontSize="18" FontWeight="SemiBold"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                            <TextBlock Text="↓ 下载" FontSize="12"
+                                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                            <TextBlock x:Name="DownloadLabel" Text="0 B" FontSize="18" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- 当前配置信息 -->
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="配置" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="文件：" FontSize="13"
+                                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                       Margin="0,0,8,4"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="ConfigFileLabel"
+                                       Text="未加载" FontSize="13" TextTrimming="CharacterEllipsis"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="节点数：" FontSize="13"
+                                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                       Margin="0,0,8,4"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="NodeCountLabel"
+                                       Text="0" FontSize="13"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="规则数：" FontSize="13"
+                                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                       Margin="0,0,8,0"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" x:Name="RuleCountLabel"
+                                       Text="0" FontSize="13"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ── Bottom Nav ── -->
+        <Border Grid.Row="2"
+                Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"
+                BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}"
+                BorderThickness="0,1,0,0">
+            <Grid Height="56">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- 主页 -->
+                <Button Grid.Column="0" Click="NavHome_Click"
+                        Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <StackPanel HorizontalAlignment="Center" Spacing="2">
+                        <TextBlock Text="&#xE700;" FontFamily="Segoe MDL2 Assets" FontSize="20" HorizontalAlignment="Center"/>
+                        <TextBlock Text="主页" FontSize="11" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- 节点 -->
+                <Button Grid.Column="1" Click="NavNodes_Click"
+                        Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <StackPanel HorizontalAlignment="Center" Spacing="2">
+                        <TextBlock Text="&#xE703;" FontFamily="Segoe MDL2 Assets" FontSize="20" HorizontalAlignment="Center"/>
+                        <TextBlock Text="节点" FontSize="11" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- 配置 -->
+                <Button Grid.Column="2" Click="NavConfig_Click"
+                        Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <StackPanel HorizontalAlignment="Center" Spacing="2">
+                        <TextBlock Text="&#xE8A9;" FontFamily="Segoe MDL2 Assets" FontSize="20" HorizontalAlignment="Center"/>
+                        <TextBlock Text="配置" FontSize="11" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+
+    </Grid>
+</Page>

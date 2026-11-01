@@ -1,0 +1,48 @@
+<Page
+    x:Class="ClashVPN.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Padding="16,12">
+            <Grid>
+                <Button Click="OnBackClick" Background="Transparent" Foreground="White" Padding="8">
+                    <TextBlock Text="&#xE72B;" FontFamily="Segoe MDL2 Assets" FontSize="20"/>
+                </Button>
+                <TextBlock Text="设置" FontSize="20" FontWeight="SemiBold"
+                           Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" Padding="16">
+            <StackPanel Spacing="12">
+
+                <Border Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                        CornerRadius="8" Padding="16">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="关于" FontSize="16" FontWeight="SemiBold"/>
+                        <TextBlock Text="ClashVPN for Windows 10 Mobile" FontSize="13"/>
+                        <TextBlock Text="版本 1.0.0" FontSize="13"
+                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                        <TextBlock Text="支持格式：Clash YAML / Surge .conf"
+                                   FontSize="13"
+                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                        <TextBlock Text="支持协议：Shadowsocks（aes-128-gcm / aes-256-gcm）/ SOCKS5 / HTTP"
+                                   FontSize="13" TextWrapping="Wrap"
+                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

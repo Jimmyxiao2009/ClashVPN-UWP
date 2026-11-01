@@ -1,0 +1,92 @@
+<Page
+    x:Class="ClashVPN.Pages.ConfigPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Padding="16,12">
+            <Grid>
+                <Button Click="OnBackClick" Background="Transparent" Foreground="White" Padding="8">
+                    <TextBlock Text="&#xE72B;" FontFamily="Segoe MDL2 Assets" FontSize="20"/>
+                </Button>
+                <TextBlock Text="配置管理" FontSize="20" FontWeight="SemiBold"
+                           Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" Padding="16">
+            <StackPanel Spacing="12">
+
+                <!-- 导入配置文件 -->
+                <Border Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                        CornerRadius="8" Padding="16">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="导入 Clash 配置" FontSize="16" FontWeight="SemiBold"/>
+                        <TextBlock Text="支持 .yaml / .yml 格式的 Clash 订阅文件"
+                                   FontSize="13"
+                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                   TextWrapping="Wrap"/>
+
+                        <Button Content="从文件导入…"
+                                Style="{StaticResource AccentButtonStyle}"
+                                HorizontalAlignment="Stretch"
+                                Click="OnImportFileClick"/>
+
+                        <TextBox x:Name="UrlBox"
+                                 PlaceholderText="或输入订阅链接…"
+                                 InputScope="Url"/>
+
+                        <Button Content="从链接下载"
+                                HorizontalAlignment="Stretch"
+                                Click="OnImportUrlClick"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- 当前配置预览 -->
+                <Border Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                        CornerRadius="8" Padding="16">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="当前配置" FontSize="16" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="ConfigSummary"
+                                   Text="未加载配置文件"
+                                   TextWrapping="Wrap" FontSize="13"
+                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- 解析日志 -->
+                <Border Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                        CornerRadius="8" Padding="16">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="解析日志" FontSize="14" FontWeight="SemiBold"/>
+                        <ScrollViewer Height="150" HorizontalScrollBarVisibility="Auto">
+                            <TextBlock x:Name="LogBox"
+                                       FontFamily="Consolas" FontSize="12"
+                                       TextWrapping="Wrap"
+                                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                        </ScrollViewer>
+                    </StackPanel>
+                </Border>
+
+                <!-- 错误提示 -->
+                <Border x:Name="ErrorBorder"
+                        Background="#3FE81224"
+                        CornerRadius="8" Padding="12"
+                        Visibility="Collapsed">
+                    <TextBlock x:Name="ErrorText" TextWrapping="Wrap" FontSize="13"/>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

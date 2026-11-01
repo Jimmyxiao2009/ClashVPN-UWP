@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap uap3 mp rescap">
+
+  <Identity
+    Name="ClashVPN.App"
+    Publisher="CN=YourName"
+    Version="1.0.0.1" />
+
+  <mp:PhoneIdentity
+    PhoneProductId="8a4c9e10-9f3b-4d27-b6a1-2c5e7f018d34"
+    PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>Clash VPN</DisplayName>
+    <PublisherDisplayName>ClashVPN</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Mobile" MinVersion="10.0.15063.0" MaxVersionTested="10.0.15254.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.15063.0" MaxVersionTested="10.0.15254.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="zh-CN"/>
+    <Resource Language="en-US"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="ClashVPN.App">
+
+      <uap:VisualElements
+        DisplayName="Clash VPN"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
+        Description="Clash config based VPN client for Windows 10 Mobile"
+        BackgroundColor="#0078D7">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#0078D7"/>
+      </uap:VisualElements>
+
+      <!-- ↓↓↓ 本机/模拟器调试时保持注释（VS 会因 windows.vpnPlugin 报 C00CE169 而无法部署，
+             且本机调试用不到 VPN 插件）。公开 SDK 的 makeappx/signtool 同样不认该 Category。
+      <Extensions>
+        <Extension Category="windows.vpnPlugin" EntryPoint="ClashVPN.Plugin.ClashVpnPlugin" />
+      </Extensions>
+      -->
+      <!-- ↑↑↑ 出设备包前取消上面注释 -->
+
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <!-- VPN 插件必须声明此 capability -->
+    <Capability Name="internetClient"/>
+    <Capability Name="internetClientServer"/>
+    <Capability Name="privateNetworkClientServer"/>
+
+    <!--
+      VPN 插件所需的受限能力（restricted capability）。
+      networkingVpnProvider 允许应用实现 windows.vpnPlugin 扩展；
+      它属于 rescap 命名空间，提交 Store 时需要审核。
+    -->
+    <rescap:Capability Name="networkingVpnProvider"/>
+  </Capabilities>
+
+</Package>
